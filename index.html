@@ -3,7 +3,143 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+
+    <link rel="stylesheet" href="components/general.css" />
+    <link rel="stylesheet" href="components/style.css" />
+    <link rel="stylesheet" href="components/queries.css" />
+
+    <link rel="icon" href="src/pulse-outline.svg" />
+
+    <script type="module" src="components/script.js"></script>
+
+    <title>HS Hospital</title>
   </head>
-  <body></body>
+  <body>
+    <header class="header">
+      <a href="#" class="logo">
+        <ion-icon name="pulse-outline"></ion-icon>
+        <span>HS HOSPITAL</span>
+      </a>
+
+      <nav class="main-nav">
+        <ul class="main-nav-list">
+          <li><a class="main-nav-link" href="#hero">Best doctors</a></li>
+          <li><a class="main-nav-link" href="#testmonials">Fedback</a></li>
+          <li><a class="main-nav-link" href="#about">About us</a></li>
+          <li><a class="main-nav-link" href="#services">Footer</a></li>
+        </ul>
+      </nav>
+      <a class="main-nav-link nav-cta" href="#cta"
+        ><span style="font-size: 24px; transform: translateY(-1.8px)"
+          >&#9679;</span
+        >
+        Sign Up</a
+      >
+
+      <button class="btn-mobile-nav">
+        <ion-icon class="icon-mobile-nav" name="menu-outline"></ion-icon>
+        <ion-icon class="icon-mobile-nav" name="close-outline"></ion-icon>
+      </button>
+    </header>
+
+    <main>
+      <section class="section-testimonials" id="testmonials">
+        <div class="testimonials-container">
+          <div class="container">
+            <span class="subheading">TESTIMONIALS </span>
+            <h2 class="heading-secondary">Best Doctors Ever!</h2>
+          </div>
+
+          <div class="testmonials">
+            <figure class="testmonial">
+              <img src="https://i.pravatar.cc/150?img=5" alt="dave photo" />
+
+              <blockquote class="testmonial-text">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                Aliquam alias necessitatibus sint maxime rem dolore aliquid
+              </blockquote>
+              <p class="testmonial-name">&mdash; Lora Bryson</p>
+            </figure>
+
+            <figure class="testmonial">
+              <img src="https://i.pravatar.cc/150?img=1" alt="ben photo" />
+
+              <blockquote class="testmonial-text">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                Aliquam alias necessitatibus sint maxime rem dolore aliquid
+              </blockquote>
+              <p class="testmonial-name">&mdash; Ben Hadley</p>
+            </figure>
+
+            <figure class="testmonial">
+              <img src="https://i.pravatar.cc/150?img=3" alt="steve photo" />
+
+              <blockquote class="testmonial-text">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                Aliquam alias necessitatibus sint maxime rem dolore aliquid
+              </blockquote>
+              <p class="testmonial-name">&mdash; Steve Miller</p>
+            </figure>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container grid grid--footer">
+        <div class="logo-col">
+          <a href="#" class="logo">
+            <ion-icon name="pulse-outline"></ion-icon>
+            <span>HS HOSPITAL</span>
+          </a>
+
+          <ul class="social-links">
+            <li>
+              <a class="footer-link" href="#"
+                ><ion-icon name="logo-instagram"></ion-icon
+              ></a>
+            </li>
+            <li>
+              <a class="footer-link" href="#">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+            </li>
+            <li>
+              <a class="footer-link" href="#"
+                ><ion-icon name="logo-twitter"></ion-icon
+              ></a>
+            </li>
+            <li>
+              <a class="footer-link" href="#"
+                ><ion-icon name="logo-youtube"></ion-icon
+              ></a>
+            </li>
+          </ul>
+
+          <p class="copyright">
+            Copyright &copy; 2021 by IEEE TEAM, Inc. All rights reserved.
+          </p>
+        </div>
+
+        <div class="nav-col">
+          <p class="footer-heading">Navigate</p>
+
+          <ul class="footer-nav">
+            <li><a href="#how-it-works" class="footer-link">Home</a></li>
+            <li><a href="#pricing" class="footer-link">about</a></li>
+            <li><a href="#pricing" class="footer-link">sign up</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule=""
+      src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
 </html>
