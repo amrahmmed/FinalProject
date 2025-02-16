@@ -1,0 +1,66 @@
+/* General Styles */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: rgb(47, 33, 44);
+}
+
+h1 {
+  font-size: 2.4rem;
+  text-transform: uppercase;
+}
+/* Header Style */
+.header {
+  background-color: rgb(47, 33, 44);
+  color: #ffffff;
+  padding: 20px;
+  text-align: center;
+}
+
+/* About Section using CSS Grid */
+.about-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 50px;
+  gap: 20px;
+  background-color: #ffffff;
+}
+
+/* About Content */
+.about-content {
+  padding-right: 20px;
+}
+
+.about-content h2 {
+  color: rgb(47, 33, 44);
+  margin-bottom: 10px;
+  font-size: 2.3em;
+}
+
+.about-content p {
+  font-size: 1.1em;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* About Image */
+.about-image img {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .about-section {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .about-content,
+  .about-image {
+    padding: 0;
+  }
+}

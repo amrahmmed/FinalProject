@@ -47,6 +47,13 @@
   gap: 4.8rem;
 }
 
+.main-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+}
+
 /* MOBILE */
 
 .btn-mobile-nav {
@@ -234,4 +241,217 @@
   font-size: 1.8rem;
   font-weight: 500;
   margin-bottom: 4rem;
+}
+
+/* doctors */
+
+.best-doctors {
+  padding: 4rem 1.5rem;
+}
+
+.section-title {
+  color: #fff;
+  font-size: 2.25rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  color: #211117;
+  text-transform: uppercase;
+}
+
+.doctors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+
+  color: #211117;
+}
+
+.doctor-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.doctor-card:hover {
+  transform: translateY(-8px);
+}
+
+.card-inner {
+  padding: 1.5rem;
+}
+
+.doctor-header {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.avatar-container {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.doctor-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 16px;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: rgb(40, 24, 36);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.doctor-meta {
+  flex: 1;
+}
+
+.doctor-name {
+  margin-top: 1rem;
+  color: #fff;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+
+  color: #211117;
+}
+
+.doctor-specialty {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  margin: 0;
+
+  color: #211117;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.stat-item {
+  background: rgba(74, 16, 16, 0.08);
+  padding: 1rem;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.stat-value {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.stat-label {
+  color: rgba(33, 17, 23, 0.7);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.expertise {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+.expertise-tag {
+  color: rgba(33, 17, 23, 0.8);
+  background-color: rgba(33, 17, 23, 0.1);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.cta-button {
+  width: 100%;
+  background: rgb(40, 24, 36);
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+  background: rgb(79, 71, 77);
+  transform: translateY(-2px);
+}
+
+.main-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 50px;
+  color: rgb(40, 24, 36);
+}
+
+.content {
+  padding-right: 20px;
+}
+
+.content h1 {
+  font-size: 6.8em;
+  margin-bottom: 20px;
+  line-height: 1.1;
+}
+
+.content p {
+  font-size: 1.8em;
+  line-height: 1.7;
+}
+
+.image img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .doctors-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+  }
+
+  .doctor-card {
+    margin-bottom: 1rem;
+  }
+  .main-section {
+    grid-template-columns: 1fr;
+  }
+  .testmonials {
+    grid-template-columns: 1fr;
+  }
+
+  .main-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-direction: column-reverse;
+  }
 }
