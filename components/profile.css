@@ -1,0 +1,191 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  h1 {
+    color: #444;
+    margin-bottom: 1.9rem;
+  }
+  
+  body {
+    padding:  2rem 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+  }
+  
+  main {
+    display: grid;
+    column-gap: 50px;
+    grid-template-columns: 1fr 1fr;
+    width: 1000px;
+
+  }
+
+
+  
+  .signup-form{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 40px;
+
+  }
+
+  .signup-button {
+    grid-column: 1/-1;
+  }
+
+  /* Sign-Up Container */
+  .signup-container {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 900px;
+    text-align: center;
+  }
+  
+  .signup-container h2 {
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+  
+  /* Input Fields */
+  .input-group {
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+  
+  .input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #555;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .input-group input:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  
+  /* Sign-Up Button */
+  .signup-button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .signup-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Log-In Link */
+  .login-link {
+    margin-top: 1rem;
+    color: #555;
+  }
+  
+  .login-link a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .login-link a:hover {
+    text-decoration: underline;
+  }
+
+
+  .patients--container{
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 900px;
+
+    text-align: center;
+  }
+
+   /* Table styling */
+   table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    text-align: left;
+}
+
+/* Table header styling */
+th {
+    background-color: #007bff;
+    color: white;
+    padding: 12px;
+    font-weight: bold;
+}
+
+
+/* Table row styling */
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+
+    
+}
+
+/* Alternate row coloring */
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Hover effect on rows */
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Add some spacing and alignment */
+td, th {
+    padding: 20px 20px;
+}
+
+.btn-delete {
+    background-color: rgb(255, 69, 69);
+    padding: 12px 24px;
+    border: none;
+    border-radius: 19px;
+    color: #000000;
+    font-weight: bold;
+
+    transform: translateY(20%);
+}
+
+.btn-delete:hover {
+    background-color: rgb(255, 153, 153);
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 600px) {
+    #patientTableContainer {
+        padding: 10px;
+    }
+    th, td {
+        padding: 8px;
+    }
+}
