@@ -1,13 +1,9 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    firstName: {
-        type: String,
-        required: true
-    },
-    lastName: { 
-        type: String,
-        required: true
+    fullname:{
+        type:String,
+        required:true
     },
     birthdate: {
         type: Date,
@@ -16,7 +12,7 @@ const userSchema = new mongoose.Schema({
     gender: {
         type: String,
         required: true,
-        enum: ["M", "F"]
+        enum: ["male", "female"]
     },
     role: {  
         type: String,
@@ -34,14 +30,13 @@ const userSchema = new mongoose.Schema({
     },
     phoneNumber: {
         type: String,
-        required: true
+        required: true,
+        unique: true
+
     }
 });
 
 
-userSchema.virtual('fullName').get(function() {
-    return `${this.firstName} ${this.lastName}`;
-});
 
 const User = mongoose.model('User', userSchema);
 
