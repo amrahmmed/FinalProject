@@ -3,14 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="src/pulse-outline.svg" />
     <title>Sign Up Page</title>
     <link rel="stylesheet" href="components/signUp.css" />
   </head>
   <body>
+    <a href="index.html" class="logo">
+      <ion-icon name="pulse-outline"></ion-icon>
+      <span>HS HOSPITAL</span>
+    </a>
+
     <div class="signup-container">
       <h2>Sign Up</h2>
       <form class="signup-form">
-        <div class="input-group">
+        <div class="input-group input-name">
           <label for="name">Full Name</label>
           <input
             type="text"
@@ -71,16 +77,19 @@
             required
           />
         </div>
-        <div class="input-group">
-          <label for="Role">Role</label>
-          <select name="Role" id="Role" style="height: 40px; width: 100%">
-            <option value="doctor">Doctor</option>
-            <option value="patient">Patient</option>
-          </select>
-        </div>
-        <div class="input-group">
+        <div class="input-group gender">
           <label for="gender">Gender</label>
-          <select name="gender" id="gender" style="height: 40px; width: 100%">
+          <select
+            name="gender"
+            id="gender"
+            style="
+              height: 40px;
+              width: 100%;
+              text-align: center;
+              font-size: 0.9rem;
+              font-family: inherit;
+            "
+          >
             <option value="male">Male</option>
             <option value="Female">Female</option>
           </select>
@@ -91,5 +100,14 @@
         Already have an account? <a href="signIn.html">Log In</a>
       </p>
     </div>
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule=""
+      src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"
+    ></script>
   </body>
 </html>

@@ -1,0 +1,108 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  height: 100vh;
+}
+
+/* Sign-In Container */
+.signin-container {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.signin-container h2 {
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+/* Input Fields */
+.input-group {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+/* Sign-In Button */
+.signin-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: rgb(119, 84, 111);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.signin-button:hover {
+  background-color: rgb(193, 79, 166);
+}
+
+/* Sign-Up Link */
+.signup-link {
+  margin-top: 1rem;
+  color: #555;
+}
+
+.signup-link a {
+  color: rgb(193, 79, 166);
+  text-decoration: none;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: bold;
+  text-decoration: none;
+  line-height: 1;
+
+  color: rgb(62, 40, 57);
+  transform: translateY(-19%);
+
+  margin-bottom: 2rem;
+}
+
+.logo ion-icon {
+  font-size: 3rem;
+  color: rgb(247, 92, 211);
+
+  transform: translateY(19%);
+}
