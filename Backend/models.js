@@ -45,11 +45,6 @@ const patientSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
-    },
-    attendingDoctor: {
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Doctor',
-        required: false
     }
 });
 
@@ -76,6 +71,10 @@ const doctorSchema = new mongoose.Schema({
     specialization: { 
         type: String,
         required: true
+    },
+    attendingPatient:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Patient'
     }
 });
 

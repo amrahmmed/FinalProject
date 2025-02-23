@@ -1,4 +1,4 @@
-const {Patient, User} = require('../models.js')
+const {Patient, User, Doctor} = require('../models.js')
 
 const login = async(req, res) =>{
     const {email,password}= req.body
@@ -15,23 +15,32 @@ const login = async(req, res) =>{
     }
 };
 
-const register = async(req,res) =>{
-    const patient = new Patient({
-        name: req.body.name,
-        email: req.body.email,
-        fullname: req.body.fullname,
-        phoneNumber: req.body.phoneNumber,
-        role: "Patient",
-        gender: req.body.gender,
-        birthdate: req.body.birthdate
-    });
-    try{await patient.save();
-        res.json(patient);
-    }catch(error){
+const register = async (req, res) => {
+    try {
+        const user = new User({
+            fullname: req.body.fullname,
+            email: req.body.email,
+            phoneNumber: req.body.phoneNumber,
+            role: "Patient",
+            gender: req.body.gender,
+            password: req.body.password,
+            birthdate: req.body.birthdate
+        });
+
+        await user.save();  
+
+        const newPatient = new Patient({
+            user: user._id   
+        });
+
+        await newPatient.save();  
+
+        res.json({ user, patient: newPatient });  
+    } catch (error) {
         res.status(500).send(error.message);
     }
-
 };
+
 
 const updatePatient = async(req,res) =>{
     const patientID = req.params.id;
@@ -50,25 +59,24 @@ const updatePatient = async(req,res) =>{
     }
 }
 
-const getRelatedDoctor = async (req, res) => {
-    const patientID = req.params.id;
+const getDoctors = async (req, res) => {
     try {
-        const patient = await Patient.findById(patientID).populate("attendingDoctor");
+        const doctors = await Doctor.find().populate('user');
 
-        if (!patient) {
-            return res.status(404).send("Patient not found");
+        if (!doctors || doctors.length === 0) {
+            return res.status(404).send("No doctors found");
         }
 
-        res.json(patient.attendingDoctor); 
+        res.json(doctors); 
     } catch (error) {
         res.status(500).send(error.message);
     }
 };
 
-modules.export = {
+module.exports = {
     register,
     login,
     updatePatient,
-    getRelatedDoctor
+    getDoctors
 }
 

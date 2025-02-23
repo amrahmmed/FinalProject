@@ -1,8 +1,8 @@
 const {
     register,
     login,
-    updatePatient,
-    getRelatedDoctor
+    updatePatient,  
+    getDoctors
 } = require('../Controllers/patient.control.js');
 
 const express = require('express');
@@ -12,4 +12,6 @@ router.post('/register',register);
 router.post('/login',login);
 
 router.patch('/update-patient/:id',updatePatient);
-router.get('get-related-doctor/:id',getRelatedDoctor);
+router.get('/get-related-doctor/:id',getDoctors);
+
+module.exports = router;
