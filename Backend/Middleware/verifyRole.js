@@ -1,4 +1,4 @@
-const { User } = require("..model.js");
+const { User } = require("../models");
 
 const verifyRole = (roles = []) => {
     return async (req, res, next) => {

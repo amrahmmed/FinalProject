@@ -1,8 +1,9 @@
-const {Admin, User} = require('../models.js')
+const {Patient, User, Doctor,Admin} = require('../models.js')
+
 
 const registerAdmin = async(req, res) =>{
     try {
-        const user = new User({
+        const newuser = new User({
             fullname: req.body.fullname,
             email: req.body.email,
             phoneNumber: req.body.phoneNumber,
@@ -12,15 +13,15 @@ const registerAdmin = async(req, res) =>{
             birthdate: req.body.birthdate
         });
 
-        await user.save();  
+        await newuser.save();  
 
         const newAdmin = new Admin({
-            user: user._id   
+            user: newuser._id   
         });
 
         await newAdmin.save();  
 
-        res.json({ user, Admin: newAdmin });  
+        res.json({ newuser, Admin: newAdmin });  
     } 
     catch (error) {
         res.status(500).send(error.message);
@@ -52,8 +53,7 @@ const addDoctor = async(req,res) =>{
             role: "Doctor",
             gender: req.body.gender,
             password: req.body.password,
-            birthdate: req.body.birthdate,
-            level_of_expertise
+            birthdate: req.body.birthdate
         });
         await user.save();
         res.status(201).json({msg:"Doctor added succesfully",doctor})
@@ -64,18 +64,31 @@ const addDoctor = async(req,res) =>{
     }
 };
 
-const retireDoctor = async(req,res)=>{
-    try{
-        const { doctorId } = req.params;
-        const doctor = await User.findOneAndDelete({ _id: doctorId, role: "Doctor"});
-        if(!doctor) return res.status(404).json({msg:"Doctor not found"});
-        res.json({msg:"Doctor retired successfully"});
-    }
-    catch(error){
-        console.error(error);
-        res.status(500).json({ msg:"server error"});
+
+
+
+
+const retireDoctor = async (req, res) => {
+    try {
+        const doctorId = req.params.id;
+
+        
+        
+        const doctor = await Doctor.findById(doctorId);
+
+        if (doctor == null) {
+            return res.status(404).json({ msg: "Doctor not found!" });
+        }
+        await Doctor.findByIdAndDelete(doctorId);
+        res.status(200).json({ msg: "Doctor retired successfully" });
+    } catch (error) {
+        console.error("Error retiring doctor:", error);
+        res.status(500).json({ msg: "Server error", error: error.message });
     }
 };
+
+
+
 
 const removePatient = async(req,res)=>{
     try{
@@ -92,7 +105,7 @@ const removePatient = async(req,res)=>{
 
 const viewDoctors = async(req,res)=>{
     try{
-        const doctors = await user.find({ role:"Doctor"}).select("-password");
+        const doctors = await User.find({ role:"Doctor"}).select("-password");
         res.json({doctors});
     }
     catch(error){
@@ -102,7 +115,7 @@ const viewDoctors = async(req,res)=>{
 }
 const viewPatients = async(req,res)=>{
     try{
-        const patients = await user.find({ role:"Patient"}).select("-password");
+        const patients = await User.find({ role:"Patient"}).select("-password");
         res.json({patients});
     }
     catch(error){
