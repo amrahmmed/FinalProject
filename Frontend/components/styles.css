@@ -1,0 +1,233 @@
+/* General Styles */
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+/* Sidebar Navigation */
+.sidebar {
+  width: 260px;
+  height: 100vh;
+  background-color: rgb(47, 33, 44);
+  color: white;
+  position: fixed;
+  left: 0;
+  top: 0;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.sidebar ul li:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding-left: 20px;
+}
+
+/* Dashboard Content */
+.dashboard {
+  margin-left: 280px;
+  padding: 30px;
+}
+
+.dashboard h2 {
+  color: rgb(47, 33, 44);
+  border-bottom: 3px solid rgb(47, 33, 44);
+  padding-bottom: 10px;
+  margin-bottom: 25px;
+  font-size: 22px;
+}
+
+/* Table Container */
+.table-container {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+table,
+th,
+td {
+  border: 1px solid #ddd;
+}
+
+th,
+td {
+  padding: 16px;
+  text-align: left;
+  font-size: 15px;
+}
+
+th {
+  background-color: rgb(47, 33, 44);
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Row Styling */
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: rgba(47, 33, 44, 0.1);
+  transition: background 0.3s ease-in-out;
+}
+
+/* Profile Images in Tables */
+.table-img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgb(47, 33, 44);
+  display: block;
+  margin: auto;
+}
+
+/* Phone & Email Styling */
+.phone,
+.email {
+  font-size: 14px;
+  color: #555;
+}
+
+.email {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.email:hover {
+  text-decoration: underline;
+}
+
+/* Action Buttons */
+.action-btn {
+  background-color: rgb(47, 33, 44);
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.3s ease-in-out;
+  display: inline-block;
+}
+
+.action-btn:hover {
+  background-color: rgb(70, 50, 65);
+  transform: translateY(-2px);
+}
+
+/* Forms */
+form {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.3s ease-in-out;
+}
+
+input:focus,
+select:focus {
+  border-color: rgb(47, 33, 44);
+  outline: none;
+  box-shadow: 0px 0px 5px rgba(47, 33, 44, 0.5);
+}
+
+form label {
+  font-weight: 600;
+  margin-top: 10px;
+  display: block;
+}
+
+/* Buttons */
+button {
+  background-color: rgb(47, 33, 44);
+  color: white;
+  padding: 12px 18px;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 15px;
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: rgb(70, 50, 65);
+  transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+    padding: 15px;
+  }
+
+  .dashboard {
+    margin-left: 220px;
+    padding: 20px;
+  }
+
+  th,
+  td {
+    font-size: 14px;
+  }
+
+  button {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+}
+
+#dashboard-content {
+  width: 50%;
+  text-align: center;
+  margin-left: 32rem;
+}
