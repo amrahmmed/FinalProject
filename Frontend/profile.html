@@ -3,14 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script type="module" src="components/script.js"></script>
-
-    <link rel="stylesheet" href="components/profile.css" />
-
-    <link rel="icon" href="src/pulse-outline.svg" />
-    <title>HS Hospital</title>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="components/styles.css" />
   </head>
   <body>
-    <div id="id"></div>
+    <nav class="navbar">Hospital Information System</nav>
+    <div class="container">
+      <aside class="sidebar">
+        <ul id="menu"></ul>
+      </aside>
+      <main class="content">
+        <h1>Welcome, <span id="user-role"></span></h1>
+        <div id="dashboard-content"></div>
+      </main>
+    </div>
+    <script src="components/dashboard.js"></script>
   </body>
 </html>
