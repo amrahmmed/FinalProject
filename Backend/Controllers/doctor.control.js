@@ -27,7 +27,7 @@ const register = async (req, res) => {
         res.status(500).send(error.message);
     }
 };
-
+    
 
 const editInfo =async(req,res) =>{
     try{
@@ -50,16 +50,28 @@ const editInfo =async(req,res) =>{
 };
 
 const viewRelatedPatients = async(req,res) =>{
+    const userId = req.params.id;
+    console.log(userId);
     try{
-        const userId = req.params.id;
-        const patients = await User.find({ doctorId: userId }).select("-password");
+        
+    const user = await Doctor.findById(userId).populate("attendingPatients");
+
+    console.log(user);
+    console.log(user.role);
+
+    if (!user) {
+        return res.status(404).json({ msg: "Doctor not found" });
+    }
+
+    const patients = user.attendingPatients || [];
 
     if (!patients.length) {
       return res.status(404).json({ msg: "No patients assigned to you." });
+    
+    }else{
+        res.status(200).json({msg:"List of patients",patients});
     }
-
-    res.json({ msg: "Patients retrieved successfully", patients });
-    }   
+    }
     catch (error) {
         console.error(error);
         res.status(500).json({ msg:"Server error"});

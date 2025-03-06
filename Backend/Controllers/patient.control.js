@@ -1,29 +1,20 @@
 const {Patient, User, Doctor} = require('../models.js')
 
-const login = async(req, res) =>{
-    const {email,password}= req.body
-    try{
-        const user = await User.findOne({email});
-        if(user && user.password == password){
-            res.json(user);
+const bcrypt = require('bcrypt');
 
-        }else{
-            res.status(404).send('User not found');
-        }
-    }catch(error){
-        res.status(500).send(error.message);
-    }
-};
+
 
 const register = async (req, res) => {
     try {
+        const salt = await bcrypt.genSalt();
+        const hashedpassword =  await bcrypt.hash(req.body.password,salt);
         const user = new User({
             fullname: req.body.fullname,
             email: req.body.email,
             phoneNumber: req.body.phoneNumber,
             role: "Patient",
             gender: req.body.gender,
-            password: req.body.password,
+            password: hashedpassword, 
             birthdate: req.body.birthdate
         });
 
@@ -75,7 +66,6 @@ const getDoctors = async (req, res) => {
 
 module.exports = {
     register,
-    login,
     updatePatient,
     getDoctors
 }

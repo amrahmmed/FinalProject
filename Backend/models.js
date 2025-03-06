@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         enum: ["Patient", "Admin", "Doctor"]
     },
-    email: {
+    email: {    
         type: String,
         required: true,
         unique: true
@@ -72,10 +72,10 @@ const doctorSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    attendingPatient:{
+    attendingPatients: [{  
         type: mongoose.Schema.Types.ObjectId,
-        ref:'Patient'
-    }
+        ref: 'User' 
+    }]
 });
 
 const Doctor = mongoose.model('Doctor', doctorSchema);
