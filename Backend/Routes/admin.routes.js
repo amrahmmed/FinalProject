@@ -1,7 +1,6 @@
 const express = require('express');
 const {
     registerAdmin,
-    loginAdmin,
     addDoctor,
     retireDoctor,
     removePatient,
@@ -13,10 +12,11 @@ const { Admin } = require('../models.js');
 const verifyToken = require('../Middleware/verifyToken.js');
 const router = express.Router();
 router.post("/register",registerAdmin);
-router.post("/login",loginAdmin,);
-router.post("/addDoctor",verifyRole(['Admin']),verifyToken,addDoctor);
-router.delete("/retireDoctor/:id",verifyRole(['Admin']),verifyToken,retireDoctor);
-router.delete("/removePatient/:patientId",verifyRole(['Admin']),verifyToken,removePatient);
-router.get("/viewDoctors",verifyRole(['Admin']),verifyToken,viewDoctors)
-router.get("/viewPatients",verifyRole(['Admin']),verifyToken,viewPatients)
+
+
+router.post("/addDoctor",verifyToken,verifyRole(['Admin']),addDoctor);
+router.delete("/retireDoctor/:id",verifyToken,verifyRole(['Admin']),retireDoctor);
+router.delete("/removePatient/:patientId",verifyToken,verifyRole(['Admin']),removePatient);
+router.get("/viewDoctors",verifyToken,verifyRole(['Admin']),viewDoctors)
+router.get("/viewPatients",verifyToken,verifyRole(['Admin']),viewPatients)
 module.exports = router;

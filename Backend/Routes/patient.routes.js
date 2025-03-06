@@ -13,7 +13,7 @@ const express = require('express');
 const router = express.Router();
 
 router.post('/register',register);
-router.post('/login',login);
+
 
 router.patch('/update-patient/:id',verifyToken,verifyRole(['Patient']),updatePatient);
 router.get('/get-related-doctor/:id',verifyToken,verifyRole(['Patient']),getDoctors);

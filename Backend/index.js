@@ -5,12 +5,14 @@ const cookieParser = require('cookie-parser');
 
 const apiroutes = require('./Routes/api.routes'); 
 
+
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-mongoose.connect('mongodb://127.0.0.1:27017/EMBS_Backend')
+mongoose.connect(process.env.URI)
     .then(() => console.log('MongoDB connected'))
-    .catch(err => console.log(err));
+    .catch(err => console.log("You fucked up"));
 
 app.use(bodyParser.json());
 app.use(cookieParser());

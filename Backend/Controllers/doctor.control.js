@@ -1,15 +1,18 @@
 const {Doctor, User} = require('../models.js')
 
+const bcrypt = require('bcrypt');
 
 const register = async (req, res) => {
     try {
+        const salt = await bcrypt.genSalt();
+        const hashedpassword =  await bcrypt.hash(req.body.password,salt);
         const user = new User({
             fullname: req.body.fullname,
             email: req.body.email,
             phoneNumber: req.body.phoneNumber,
             role: "Doctor",
             gender: req.body.gender,
-            password: req.body.password,
+            password: hashedpassword,
             birthdate: req.body.birthdate
         });
 

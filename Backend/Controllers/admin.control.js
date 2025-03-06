@@ -1,15 +1,17 @@
 const {Patient, User, Doctor,Admin} = require('../models.js')
-
+const bcrypt = require('bcrypt');
 
 const registerAdmin = async(req, res) =>{
     try {
+        const salt = await bcrypt.genSalt();
+        const hashedpassword =  await bcrypt.hash(req.body.password,salt);
         const newuser = new User({
             fullname: req.body.fullname,
             email: req.body.email,
             phoneNumber: req.body.phoneNumber,
             role: "Admin",
             gender: req.body.gender,
-            password: req.body.password,
+            password: hashedpassword,
             birthdate: req.body.birthdate
         });
 
@@ -26,22 +28,6 @@ const registerAdmin = async(req, res) =>{
     catch (error) {
         res.status(500).send(error.message);
     }
-};
-const loginAdmin = async(req,res) =>{
-    const {email,password}= req.body
-    try{
-        const user = await User.findOne({email});
-        if(user && user.password == password){
-            res.json(user);
-
-        }else{
-            res.status(404).send('User not found');
-        }
-    }
-    catch(error){
-        res.status(500).send(error.message);
-    }
-    
 };
 
 const addDoctor = async(req,res) =>{
@@ -105,17 +91,21 @@ const removePatient = async(req,res)=>{
 
 const viewDoctors = async(req,res)=>{
     try{
-        const doctors = await User.find({ role:"Doctor"}).select("-password");
+        const doctors = await Doctor.find()
+  .populate({ path: "user", select: "-password" }); 
+
         res.json({doctors});
     }
     catch(error){
         console.error(error);
-        res.status(500).json({ msg:"server error"});
+        res.status(500).json({ msg:"server error lol "});
     }
 }
 const viewPatients = async(req,res)=>{
     try{
-        const patients = await User.find({ role:"Patient"}).select("-password");
+        const patients = await Patient.find()
+        .populate({ path: "user", select: "-password" }); 
+
         res.json({patients});
     }
     catch(error){
@@ -126,7 +116,6 @@ const viewPatients = async(req,res)=>{
 
 module.exports = { 
     registerAdmin,
-    loginAdmin,
     addDoctor, 
     retireDoctor, 
     removePatient, 
