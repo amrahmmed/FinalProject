@@ -1,15 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const signUpForm = document.getElementById("sign-up-form");
+  const signUpForm = document.getElementById("signup-form");
 
   signUpForm.addEventListener("submit", async function (event) {
     event.preventDefault(); // Prevent default form submission
 
-    const fullName = document.getElementById("full-name").value.trim();
+    const fullName = document.getElementById("name").value.trim();
     const email = document.getElementById("email").value.trim();
-    const phoneNumber = document.getElementById("phone-number").value.trim();
+    const phoneNumber = document.getElementById("phoneNumber").value.trim();
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("confirm-password").value;
-    const birthDate = document.getElementById("birth-date").value;
+    const birthDate = document.getElementById("Birth").value;
     const gender = document.getElementById("gender").value;
 
     // Basic validation
@@ -41,13 +41,16 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/api/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
+      const response = await fetch(
+        "http://localhost:5500/api/patient/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        }
+      );
 
       const result = await response.json();
 
