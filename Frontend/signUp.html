@@ -15,13 +15,13 @@
 
     <div class="signup-container">
       <h2>Sign Up</h2>
-      <form class="signup-form">
+      <form class="signup-form" id = "signup-form">
         <div class="input-group input-name">
           <label for="name">Full Name</label>
           <input
             type="text"
-            id="name"
-            name="name"
+            id="full-name"
+            name="full-name"
             placeholder="Enter your full name"
             required
           />
@@ -40,7 +40,7 @@
           <label for="phoneNumber">phoneNumber</label>
           <input
             type="text"
-            id="phoneNumber"
+            id="phonenumber"
             name="phoneNumber"
             placeholder="Enter your phone number"
             required
@@ -57,12 +57,12 @@
           />
         </div>
         <div class="input-group">
-          <label for="password">Birth date</label>
+          <label for="Birhtdate">Birth date</label>
           <input
             type="date"
-            id="password"
-            name="password"
-            placeholder="Enter your password"
+            id="Birhtdate"
+            name="Birhtdate"
+            placeholder="Enter Birhtdate"
             required
           />
         </div>
@@ -90,7 +90,7 @@
               font-family: inherit;
             "
           >
-            <option value="male">Male</option>
+            <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
         </div>
@@ -100,7 +100,7 @@
         Already have an account? <a href="signIn.html">Log In</a>
       </p>
     </div>
-
+    <script src="../Frontend/components/signup.js"></script>
     <script
       type="module"
       src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"
