@@ -3,34 +3,46 @@ const {Patient, User, Doctor} = require('../models.js')
 const bcrypt = require('bcrypt');
 
 
-
 const register = async (req, res) => {
     try {
         const salt = await bcrypt.genSalt();
-        const hashedpassword =  await bcrypt.hash(req.body.password,salt);
+        const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
         const user = new User({
             fullname: req.body.fullname,
             email: req.body.email,
             phoneNumber: req.body.phoneNumber,
             role: "Patient",
             gender: req.body.gender,
-            password: hashedpassword, 
+            password: hashedPassword, 
             birthdate: req.body.birthdate
         });
 
-        await user.save();  
+        await user.save();
 
         const newPatient = new Patient({
-            user: user._id   
+            user: user._id
         });
 
-        await newPatient.save();  
+        await newPatient.save();
 
-        res.json({ user, patient: newPatient });  
+        
+        res.status(201).json({ 
+            message: "Patient registered successfully",
+            user, 
+            patient: newPatient 
+        });  
     } catch (error) {
-        res.status(500).send(error.message);
+        console.error("Registration Error:", error);
+        
+        
+        res.status(500).json({ 
+            message: "Server error occurred", 
+            error: error.message 
+        });
     }
 };
+
 
 
 const updatePatient = async(req,res) =>{
