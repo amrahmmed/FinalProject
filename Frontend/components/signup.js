@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
   signUpForm.addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    const fullName = document.getElementById("full-name").value.trim();
+    const fullName = document.getElementById("name").value.trim();
     const email = document.getElementById("email").value.trim();
     const phoneNumber = document.getElementById("phonenumber").value.trim();
     const password = document.getElementById("password").value;
