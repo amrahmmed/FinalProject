@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const birthDate = document.getElementById("Birhtdate").value;
     const gender = document.getElementById("gender").value;
 
-    
     if (
       !fullName ||
       !email ||
@@ -45,21 +44,25 @@ document.addEventListener("DOMContentLoaded", function () {
       password: password,
       birthdate: birthDate,
       gender: gender,
+      role: "patient",
     };
     console.log(JSON.stringify(userData, null, 2));
 
     try {
-      const response = await fetch("http://localhost:5500/api/patient/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
-    
-      console.log("Response status:", response.status); 
-      console.log("Response headers:", response.headers);  
-    
+      const response = await fetch(
+        "http://localhost:5500/api/patient/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        }
+      );
+
+      console.log("Response status:", response.status);
+      console.log("Response headers:", response.headers);
+
       let result;
       try {
         result = await response.json();
@@ -68,11 +71,11 @@ document.addEventListener("DOMContentLoaded", function () {
         alert("Server returned invalid JSON.");
         return;
       }
-    
-      console.log("API Response:", result); 
+
+      console.log("API Response:", result);
       if (response.ok) {
         alert("Sign-up successful! Redirecting to login...");
-        window.location.href = "login.html";
+        window.location.href = "profile.html";
       } else {
         alert("Error: " + result.message);
       }
@@ -80,6 +83,5 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Network Error:", error);
       alert("Server error. Please try again later.");
     }
-    
   });
 });
