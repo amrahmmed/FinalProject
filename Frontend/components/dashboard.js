@@ -1,117 +1,102 @@
-// Fetch doctors from the API
-function fakeApiGetDoctors() {
-  return fetch("http://localhost:5500/api/doctors")
-    .then((response) => {
-      if (!response.ok)
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      return response.json();
-    })
-    .catch((error) => {
-      console.error("Error fetching doctors:", error);
-      return [];
-    });
+const role = localStorage.getItem("userRole");
+const token = localStorage.getItem("token");
+
+// 🔄 Redirect if not logged in
+if (!role || !token) {
+  window.location.href = "index.html";
 }
 
-// Fetch patients from the API
-function fakeApiGetPatients() {
-  return fetch("http://localhost:5500/api/patients")
-    .then((response) => {
-      if (!response.ok)
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      return response.json();
-    })
-    .catch((error) => {
-      console.error("Error fetching patients:", error);
-      return [];
-    });
-}
+// 🛠 Fetch Doctors
+async function fetchDoctors() {
+  try {
+    const response = await fetch(
+      "http://localhost:5500/api/admin/viewDoctors",
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
 
-// Add a new doctor using the API
-function fakeApiAddDoctor(newDoctor) {
-  return fetch("http://localhost:5500/api/doctors", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(newDoctor),
-  })
-    .then((response) => {
-      if (!response.ok) throw new Error("Failed to add doctor");
-      return response.json();
-    })
-    .catch((error) => {
-      console.error("Error adding doctor:", error);
-      return null;
-    });
-}
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
 
-// Remove a doctor using the API
-function fakeApiRemoveDoctor(id) {
-  return fetch(`http://localhost:5500/api/doctors/${id}`, {
-    method: "DELETE",
-  })
-    .then((response) => {
-      if (!response.ok) throw new Error("Failed to remove doctor");
-      return true;
-    })
-    .catch((error) => {
-      console.error("Error removing doctor:", error);
-      return false;
-    });
-}
-
-// Remove a patient using the API
-function fakeApiRemovePatient(id) {
-  return fetch(`http://localhost:5500/api/patients/${id}`, {
-    method: "DELETE",
-  })
-    .then((response) => {
-      if (!response.ok) throw new Error("Failed to remove patient");
-      return true;
-    })
-    .catch((error) => {
-      console.error("Error removing patient:", error);
-      return false;
-    });
-}
-
-// Load Dashboard based on User Role
-document.addEventListener("DOMContentLoaded", async function () {
-  const userRole = localStorage.getItem("userRole");
-
-  if (!userRole) {
-    window.location.href = "index.html";
-    return;
+    const data = await response.json();
+    return data.doctors || []; // Extract the doctors array
+  } catch (error) {
+    console.error("Error fetching doctors:", error);
+    return [];
   }
+}
 
-  document.getElementById("user-role").innerText = userRole;
+// 🛠 Fetch Patients
+async function fetchPatients() {
+  try {
+    const response = await fetch(
+      "http://localhost:5500/api/admin/viewPatients",
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.patients || []; // Extract the patients array
+  } catch (error) {
+    console.error("Error fetching patients:", error);
+    return [];
+  }
+}
+
+// 🚀 Load Dashboard Based on Role
+document.addEventListener("DOMContentLoaded", async function () {
+  document.getElementById("user-role").innerText = role;
 
   const menu = document.getElementById("menu");
 
-  if (userRole === "Admin") {
+  if (role === "Admin") {
     menu.innerHTML = `
-          <li onclick="manageDoctors()">Manage Doctors</li>
-          <li onclick="managePatients()">Manage Patients</li>
+          <li onclick="displayDoctors()">Manage Doctors</li>
+          <li onclick="displayPatients()">Manage Patients</li>
       `;
-    manageDoctors();
-  } else if (userRole === "Doctor") {
+    displayDoctors();
+  } else if (role === "Doctor") {
     menu.innerHTML = `
-          <li onclick="viewPatients()">View Patients</li>
+          <li onclick="displayPatients()">View Patients</li>
           <li onclick="editDoctorProfile()">Edit Profile</li>
       `;
-    viewPatients();
-  } else if (userRole === "Patient") {
+    displayPatients();
+  } else if (role === "Patient") {
     menu.innerHTML = `
-          <li onclick="viewDoctorspatients()">View Doctors</li>
+          <li onclick="displayDoctors()">View Doctors</li>
           <li onclick="editPatientProfile()">Edit Profile</li>
       `;
-    viewDoctorspatients();
+    displayDoctors();
   }
 });
 
-// 🟢 Admin: Manage Doctors
-async function manageDoctors() {
-  const doctors = await fakeApiGetDoctors();
-  let tableHtml = `
-  <h2>Doctors</h2>
+// 🟢 **Admin: Display Doctors**
+async function displayDoctors() {
+  const doctors = await fetchDoctors();
+
+  if (!Array.isArray(doctors)) {
+    console.error("Error: doctors data is not an array", doctors);
+    return;
+  }
+
+  let tableHtml = `<h2>Doctors</h2>
   <button onclick="showAddDoctorForm()" style="font-size:1.2rem; margin-bottom:1.2rem;"> + Add Doctor</button>
   <table>
       <tr>
@@ -124,16 +109,22 @@ async function manageDoctors() {
           <th>Action</th>
       </tr>`;
 
+  console.log(doctors);
+
   doctors.forEach((d) => {
     tableHtml += `
       <tr>
-          <td>${d.name}</td>
-          <td>${d.email}</td>
-          <td>${d.phone}</td>
-          <td>${d.birthdate}</td>
-          <td>${d.gender}</td>
-          <td><img src="${d.photo}" width="50"></td>
-          <td><button onclick="removeDoctor(${d.id})">Retire</button></td>
+          <td>${d.user.fullname}</td>
+          <td>${d.user.email}</td>
+          <td stye="width:"10px;">${d.user.phoneNumber}</td>
+          <td>${
+            new Date().getFullYear() - new Date(d.user.birthdate).getFullYear()
+          }</td>
+          <td>${d.user.gender}</td>
+          <td><img src="https://randomuser.me/api/portraits/men/${
+            d.user._id[11]
+          }.jpg" width="50"></td>
+          <td><button onclick="removeDoctor('${d._id}')">Retire</button></td>
       </tr>`;
   });
 
@@ -141,145 +132,96 @@ async function manageDoctors() {
   document.getElementById("dashboard-content").innerHTML = tableHtml;
 }
 
-// 🟢 Admin: Manage Doctors
-async function manageDoctorspatients() {
-  const doctors = await fakeApiGetDoctors();
-  let tableHtml = `
-  <h2>Doctors</h2>
-  <table>
-      <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Birthdate</th>
-          <th>Gender</th>
-          <th>Photo</th>
-          <th>Action</th>
-      </tr>`;
+// 🟢 **Admin: Display Patients**
+async function displayPatients() {
+  const patients = await fetchPatients();
 
-  doctors.forEach((d) => {
-    tableHtml += `
-      <tr>
-          <td>${d.name}</td>
-          <td>${d.email}</td>
-          <td>${d.phone}</td>
-          <td>${d.birthdate}</td>
-          <td>${d.gender}</td>
-          <td><img src="${d.photo}" width="50"></td>
-          <td><button onclick="removeDoctor(${d.id})">Retire</button></td>
-      </tr>`;
-  });
-
-  tableHtml += `</table>`;
-  document.getElementById("dashboard-content").innerHTML = tableHtml;
-}
-
-// Show Add Doctor Form
-function showAddDoctorForm() {
-  document.getElementById("dashboard-content").innerHTML = `
-      <h2>Add New Doctor</h2>
-      <input type="text" id="doctor-name" placeholder="Full Name">
-      <input type="email" id="doctor-email" placeholder="Email">
-      <input type="text" id="doctor-phone" placeholder="Phone Number">
-      <input type="date" id="doctor-birthdate">
-      <select id="doctor-gender">
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-      </select>
-      <button onclick="addDoctor()">Add Doctor</button>
-  `;
-}
-
-// Add Doctor
-async function addDoctor() {
-  const name = document.getElementById("doctor-name").value;
-  const email = document.getElementById("doctor-email").value;
-  const phone = document.getElementById("doctor-phone").value;
-  const birthdate = document.getElementById("doctor-birthdate").value;
-  const gender = document.getElementById("doctor-gender").value;
-
-  if (!name || !email || !phone || !birthdate || !gender) {
-    alert("All fields are required!");
+  if (!Array.isArray(patients)) {
+    console.error("Error: patients data is not an array", patients);
     return;
   }
 
-  const newDoctor = {
-    name,
-    email,
-    phone,
-    birthdate,
-    gender,
-    photo:
-      gender === "Male"
-        ? "https://randomuser.me/api/portraits/men/22.jpg"
-        : "https://randomuser.me/api/portraits/women/22.jpg",
-  };
+  let tableHtml = `<h2>Patients</h2><table>
+      <tr><th>Name</th><th>Age</th><th>Phone</th><th>Action</th></tr>`;
 
-  await fakeApiAddDoctor(newDoctor);
-  alert("Doctor added successfully!");
-  manageDoctors();
-}
-
-// Remove Doctor
-async function removeDoctor(id) {
-  if (confirm("Are you sure you want to retire this doctor?")) {
-    await fakeApiRemoveDoctor(id);
-    alert("Doctor retired successfully!");
-    manageDoctors();
-  }
-}
-
-// 🟠 Admin: Manage Patients
-async function managePatients() {
-  const patients = await fakeApiGetPatients();
-  let tableHtml = `<h2>Patients</h2><table><tr><th>Name</th><th>Age</th><th>Phone</th><th>Action</th></tr>`;
-
-  patients.forEach((p) => {
-    tableHtml += `<tr>
-          <td>${p.name}</td>
-          <td>${p.age}</td>
-          <td>${p.phone}</td>
-          <td><button onclick="removePatient(${p.id})">Remove</button></td>
+  console.log(patients);
+  patients
+    .filter((p) => p && p.user)
+    .forEach((p) => {
+      tableHtml += `<tr>
+          <td>${p.user.fullname}</td>
+          <td>${
+            new Date().getFullYear() - new Date(p.user.birthdate).getFullYear()
+          }</td>
+          <td>${p.user.phoneNumber}</td>
+          <td><button onclick="removePatient('${
+            p.user._id
+          }')">Remove</button></td>
       </tr>`;
-  });
+    });
 
   tableHtml += `</table>`;
   document.getElementById("dashboard-content").innerHTML = tableHtml;
 }
+async function removeDoctor(id) {
+  if (!id) {
+    console.error("Error: Doctor ID is missing!");
+    alert("Doctor ID is invalid.");
+    return;
+  }
 
-// Remove Patient
+  if (confirm("Are you sure you want to retire this doctor?")) {
+    try {
+      const response = await fetch(
+        `http://localhost:5500/api/admin/retireDoctor/${id}`, // 🔹 Fixed API route
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      const responseData = await response.json();
+      console.log("API Response:", responseData);
+
+      if (!response.ok) {
+        throw new Error(responseData.msg || "Failed to remove doctor");
+      }
+
+      alert("Doctor retired successfully!");
+      displayDoctors(); // 🔄 Refresh doctor list
+    } catch (error) {
+      console.error("Error removing doctor:", error);
+      alert("Failed to retire doctor. Try again.");
+    }
+  }
+}
+
+// 🟠 **Remove Patient**
 async function removePatient(id) {
   if (confirm("Are you sure you want to remove this patient?")) {
-    await fakeApiRemovePatient(id);
-    managePatients();
+    try {
+      const response = await fetch(
+        `http://localhost:5500/api/admin/removePatient/${id}`,
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to remove patient");
+      }
+
+      alert("Patient removed successfully!");
+      displayPatients(); // 🔄 Refresh the patients list
+    } catch (error) {
+      console.error("Error removing patient:", error);
+      alert("Failed to remove patient. Try again.");
+    }
   }
 }
 
-// 🔵 Doctor: View Patients
-async function viewPatients() {
-  const patients = await fakeApiGetPatients();
-  let tableHtml = `<h2>Patients</h2><table><tr><th>Name</th><th>Age</th><th>Phone</th></tr>`;
-
-  patients.forEach((p) => {
-    tableHtml += `<tr><td>${p.name}</td><td>${p.age}</td><td>${p.phone}</td></tr>`;
-  });
-
-  tableHtml += `</table>`;
-  document.getElementById("dashboard-content").innerHTML = tableHtml;
-}
-
-// 🔵 Patient: View Doctors
-async function viewDoctors() {
-  const doctors = await fakeApiGetDoctors();
-  manageDoctors();
-}
-// 🔵 Patient: View Doctors
-async function viewDoctorspatients() {
-  const doctors = await fakeApiGetDoctors();
-  manageDoctorspatients();
-}
-
-// 🟢 Patient: Edit Profile
+// 🟢 **Patient: Edit Profile**
 function editPatientProfile() {
   document.getElementById("dashboard-content").innerHTML = `
       <h2>Edit Profile</h2>
@@ -291,7 +233,7 @@ function editPatientProfile() {
   `;
 }
 
-// 🟢 Save Updated Patient Profile
+// 🟢 **Save Updated Patient Profile**
 async function savePatientProfile() {
   const name = document.getElementById("patient-name").value;
   const email = document.getElementById("patient-email").value;
@@ -320,32 +262,61 @@ async function savePatientProfile() {
   }
 }
 
-async function editDoctorProfile() {
-  // Fetch the current doctor's data (assuming the logged-in doctor)
-  const doctorId = localStorage.getItem("userId"); // Store the doctor's ID in local storage after login
-  if (!doctorId) {
-    alert("Doctor ID not found!");
+async function addDoctor() {
+  const fullname = document.getElementById("doctor-name").value;
+  const email = document.getElementById("doctor-email").value;
+  const phoneNumber = document.getElementById("doctor-phone").value;
+  const birthdate = document.getElementById("doctor-birthdate").value;
+  const gender = document.getElementById("doctor-gender").value;
+  const password = "DefaultPass123"; // Default password (should be hashed)
+
+  if (!fullname || !email || !phoneNumber || !birthdate || !gender) {
+    alert("All fields are required!");
     return;
   }
 
+  const newDoctor = {
+    fullname,
+    email,
+    phoneNumber,
+    birthdate: new Date().getFullYear(),
+    gender,
+    password,
+  };
+
   try {
-    const response = await fetch(
-      `http://localhost:5500/api/doctors/${doctorId}`
-    );
-    if (!response.ok) throw new Error("Failed to fetch doctor details");
+    const response = await fetch("http://localhost:5500/api/admin/addDoctor", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newDoctor),
+    });
 
-    const doctor = await response.json();
+    const result = await response.json();
+    console.log("API Response:", result);
 
-    // Load the form with existing doctor details
-    document.getElementById("dashboard-content").innerHTML = `
-        <h2>Edit Doctor Profile</h2>
-        <input type="text" id="doctor-name" placeholder="Full Name" value="${doctor.name}">
-        <input type="email" id="doctor-email" placeholder="Email" value="${doctor.email}">
-        <input type="text" id="doctor-phone" placeholder="Phone Number" value="${doctor.phone}">
-        <button onclick="saveDoctorProfile(${doctorId})">Save Changes</button>
-    `;
+    if (!response.ok) throw new Error(result.msg || "Failed to add doctor");
+
+    alert("Doctor added successfully!");
+    displayDoctors();
   } catch (error) {
-    console.error("Error fetching doctor profile:", error);
-    alert("Error loading profile.");
+    console.error("❌ Error adding doctor:", error);
+    alert("Error adding doctor. Try again.");
   }
+}
+function showAddDoctorForm() {
+  document.getElementById("dashboard-content").innerHTML = `
+      <h2>Add New Doctor</h2>
+      <input type="text" id="doctor-name" placeholder="Full Name">
+      <input type="email" id="doctor-email" placeholder="Email">
+      <input type="text" id="doctor-phone" placeholder="Phone Number">
+      <input type="date" id="doctor-birthdate">
+      <select id="doctor-gender">
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+      </select>
+      <button onclick="addDoctor()">Add Doctor</button>
+  `;
 }

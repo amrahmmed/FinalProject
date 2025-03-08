@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
       email: email,
       phoneNumber: phoneNumber,
       password: password,
-      birthdate: birthDate,
+      birthdate: new Date().getFullYear(),
       gender: gender,
       role: "patient",
     };

@@ -56,3 +56,25 @@ document
       document.getElementById("error-message").innerText = "Server error!";
     }
   });
+const token = localStorage.getItem("token"); // Ensure token is stored in localStorage or cookies
+
+fetch("http://localhost:5500/api/admin/viewPatients", {
+  method: "GET",
+  headers: {
+    Authorization: `Bearer ${token}`, // Include token
+    "Content-Type": "application/json",
+  },
+  credentials: "include", // Ensures cookies are sent if used
+})
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then((data) => {
+    console.log("Patients data:", data);
+  })
+  .catch((error) => {
+    console.error("Error fetching data:", error);
+  });

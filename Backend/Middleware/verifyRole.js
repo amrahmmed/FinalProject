@@ -1,21 +1,27 @@
 const { User } = require("../models");
-
 const verifyRole = (roles = []) => {
-    return async (req, res, next) => {
-        reqid = req.params.id;
-        try {
-            const userId = req.user.id;
-            const user = await User.findById(userId);
+  return async (req, res, next) => {
+    try {
+      console.log("User in verifyRole:", req.user); // 🔍 Debugging log
 
-            if (!user || !roles.includes(user.role) || userId != reqid) {
-                return res.status(403).send('Access denied');
-            }
+      const userId = req.user.id;
+      const user = await User.findById(userId);
 
-            next();
-        } catch (err) {
-            res.status(500).send('Server error');
-        }
-    };
+      if (!user) {
+        return res.status(403).json({ message: "User not found" });
+      }
+
+      console.log(`Required roles: ${roles}, User role: ${user.role}`); // 🔍 Check role
+
+      if (!roles.includes(user.role)) {
+        return res.status(403).json({ message: "Access denied" });
+      }
+
+      next();
+    } catch (err) {
+      console.error("Error in verifyRole:", err);
+      res.status(500).json({ message: "Server error" });
+    }
+  };
 };
-
 module.exports = verifyRole;
